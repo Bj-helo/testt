@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz Aniversário, Gatinha!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #ffe6f0, #fff0f5);
+      font-family: 'Comic Sans MS', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    .envelope {
+      width: 200px;
+      height: 130px;
+      background: pink;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .envelope::before, .envelope::after {
+      content: '';
+      position: absolute;
+      border-style: solid;
+      border-width: 65px 100px;
+      border-color: transparent transparent #ffc0cb transparent;
+      top: -65px;
+      left: 0;
+    }
+    .envelope:hover {
+      transform: scale(1.05);
+    }
+    .message-box {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff0f5;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 1s ease forwards;
+    }
+    .typed-text {
+      font-size: 18px;
+      white-space: pre-wrap;
+      text-align: left;
+    }
+    .cat {
+      display: none;
+      margin-top: 20px;
+      width: 80px;
+      height: 80px;
+      background: url('https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif') no-repeat center center / cover;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn {
+      margin-top: 15px;
+      background: pink;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background: hotpink;
+      color: white;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -60%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+    .confetti {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+    .confetti-piece {
+      width: 10px;
+      height: 10px;
+      background-color: #ff69b4;
+      position: absolute;
+      top: -10px;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotateZ(360deg);
+        opacity: 0;
+      }
+    }
+    @media (max-width: 600px) {
+      .message-box {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="envelope" onclick="openMessage()"></div>
+
+  <div class="message-box" id="messageBox">
+    <div class="typed-text" id="typedText"></div>
+    <div class="cat" id="cat"></div>
+    <button class="btn" onclick="alert('Beijinho enviado! 😽')">Mandar um beijinho de volta 💌</button>
+  </div>
+
+  <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_53f635bc30.mp3?filename=cute-children-110993.mp3"></audio>
+
+  <div class="confetti" id="confetti"></div>
+
+  <script>
+    const message = `Feliz aniversário, gatinha!!! 🎉🎂\n\nHoje é o seu dia e eu espero que ele seja tão doce quanto o seu sorriso e tão especial quanto você é para mim. Que cada instante seja cheio de carinho, paz, alegria e muito amor.\n\nCom amor, Helo. 💖`;
+    let index = 0;
+
+    function openMessage() {
+      const box = document.getElementById("messageBox");
+      const text = document.getElementById("typedText");
+      const cat = document.getElementById("cat");
+      const music = document.getElementById("bgMusic");
+
+      music.play();
+      box.style.display = "block";
+      typeWriter();
+      launchConfetti();
+
+      function typeWriter() {
+        if (index < message.length) {
+          text.innerHTML += message.charAt(index);
+          index++;
+          setTimeout(typeWriter, 40);
+        } else {
+          setTimeout(() => {
+            cat.style.display = "block";
+          }, 1000);
+        }
+      }
+    }
+
+    function launchConfetti() {
+      const confetti = document.getElementById("confetti");
+      for (let i = 0; i < 100; i++) {
+        const piece = document.createElement("div");
+        piece.classList.add("confetti-piece");
+        piece.style.left = Math.random() * 100 + "%";
+        piece.style.backgroundColor = ["#ff69b4", "#ffb6c1", "#ff1493", "#ffa07a"][Math.floor(Math.random()*4)];
+        piece.style.animationDuration = (Math.random() * 2 + 3) + "s";
+        confetti.appendChild(piece);
+
+        setTimeout(() => {
+          piece.remove();
+        }, 5000);
+      }
+    }
+  </script>
+</body>
+</html>
