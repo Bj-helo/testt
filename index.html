@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Feliz Aniversário, Gatinha!</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom, #ffe6f0, #fff0f5);
-      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to bottom right, #ffe6f0, #fff0f5);
+      font-family: 'Pacifico', cursive;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -17,6 +19,7 @@
       overflow: hidden;
       position: relative;
     }
+
     .envelope {
       width: 200px;
       height: 130px;
@@ -25,7 +28,10 @@
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: transform 0.3s ease;
+      border-radius: 10px;
+      animation: pulse 2s infinite;
     }
+
     .envelope::before, .envelope::after {
       content: '';
       position: absolute;
@@ -34,10 +40,13 @@
       border-color: transparent transparent #ffc0cb transparent;
       top: -65px;
       left: 0;
+      transition: transform 0.5s ease;
     }
+
     .envelope:hover {
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
+
     .message-box {
       display: none;
       position: absolute;
@@ -45,46 +54,61 @@
       left: 50%;
       transform: translate(-50%, -50%);
       background: #fff0f5;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.2);
       width: 90%;
-      max-width: 400px;
+      max-width: 500px;
       text-align: center;
       animation: fadeIn 1s ease forwards;
     }
+
     .typed-text {
-      font-size: 18px;
+      font-size: 20px;
       white-space: pre-wrap;
       text-align: left;
+      color: #333;
+      line-height: 1.5;
     }
+
     .cat {
       display: none;
       margin-top: 20px;
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
       background: url('https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif') no-repeat center center / cover;
       margin-left: auto;
       margin-right: auto;
     }
+
     .btn {
-      margin-top: 15px;
+      margin-top: 20px;
       background: pink;
       border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
+      padding: 12px 25px;
+      border-radius: 25px;
       font-size: 16px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      color: #333;
+      transition: all 0.3s ease;
     }
+
     .btn:hover {
       background: hotpink;
       color: white;
+      transform: scale(1.05);
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translate(-50%, -60%); }
       to { opacity: 1; transform: translate(-50%, -50%); }
     }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 10px #ff69b4; }
+      50% { box-shadow: 0 0 25px #ff69b4; }
+    }
+
     .confetti {
       position: fixed;
       top: 0;
@@ -93,23 +117,27 @@
       pointer-events: none;
       z-index: 999;
     }
+
     .confetti-piece {
-      width: 10px;
-      height: 10px;
-      background-color: #ff69b4;
+      width: 12px;
+      height: 12px;
       position: absolute;
       top: -10px;
       animation: fall linear infinite;
+      opacity: 0.8;
+      border-radius: 50%;
     }
+
     @keyframes fall {
       to {
         transform: translateY(100vh) rotateZ(360deg);
         opacity: 0;
       }
     }
+
     @media (max-width: 600px) {
-      .message-box {
-        font-size: 16px;
+      .typed-text {
+        font-size: 18px;
       }
     }
   </style>
@@ -137,8 +165,11 @@
       const cat = document.getElementById("cat");
       const music = document.getElementById("bgMusic");
 
-      music.play();
+      if (music.paused) music.play();
+
       box.style.display = "block";
+      text.innerHTML = "";
+      index = 0;
       typeWriter();
       launchConfetti();
 
@@ -150,24 +181,31 @@
         } else {
           setTimeout(() => {
             cat.style.display = "block";
-          }, 1000);
+          }, 800);
         }
       }
     }
 
     function launchConfetti() {
       const confetti = document.getElementById("confetti");
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 120; i++) {
         const piece = document.createElement("div");
         piece.classList.add("confetti-piece");
+
         piece.style.left = Math.random() * 100 + "%";
-        piece.style.backgroundColor = ["#ff69b4", "#ffb6c1", "#ff1493", "#ffa07a"][Math.floor(Math.random()*4)];
+        const colors = ["#ff69b4", "#ffb6c1", "#ff1493", "#ffa07a", "#ffff99", "#fffacd"];
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+        const size = Math.random() * 8 + 4;
+        piece.style.width = size + "px";
+        piece.style.height = size + "px";
+
         piece.style.animationDuration = (Math.random() * 2 + 3) + "s";
         confetti.appendChild(piece);
 
         setTimeout(() => {
           piece.remove();
-        }, 5000);
+        }, 6000);
       }
     }
   </script>
