@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Feliz Aniversário, Gatinha!</title>
+  <title>Feliz Imortalidade</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
 
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom right, #ffe6f0, #fff0f5);
-      font-family: 'Pacifico', cursive;
+      background: linear-gradient(to bottom, #0a0a0a, #1a1a1a);
+      font-family: 'UnifrakturCook', cursive;
+      color: #f0e6f6;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -20,149 +21,125 @@
       position: relative;
     }
 
-    .envelope {
-      width: 200px;
-      height: 130px;
-      background: pink;
+    .heart {
+      width: 100px;
+      height: 90px;
+      background: crimson;
       position: relative;
+      transform: rotate(-45deg);
+      animation: pulse 1s infinite;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-      border-radius: 10px;
-      animation: pulse 2s infinite;
     }
 
-    .envelope::before, .envelope::after {
-      content: '';
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 100px;
+      height: 90px;
+      background: crimson;
+      border-radius: 50%;
       position: absolute;
-      border-style: solid;
-      border-width: 65px 100px;
-      border-color: transparent transparent #ffc0cb transparent;
-      top: -65px;
+    }
+
+    .heart::before {
+      top: -50px;
       left: 0;
-      transition: transform 0.5s ease;
     }
 
-    .envelope:hover {
-      transform: scale(1.1);
+    .heart::after {
+      left: 50px;
+      top: 0;
     }
 
-    .message-box {
+    @keyframes pulse {
+      0%, 100% { transform: scale(1) rotate(-45deg); }
+      50% { transform: scale(1.1) rotate(-45deg); }
+    }
+
+    .message-box, .immortal-box {
       display: none;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: #fff0f5;
-      padding: 25px;
-      border-radius: 20px;
-      box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+      background: #1a0f1f;
+      border: 2px solid #8b0000;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 600px;
       width: 90%;
-      max-width: 500px;
       text-align: center;
       animation: fadeIn 1s ease forwards;
+      box-shadow: 0 0 20px #8b0000;
     }
 
     .typed-text {
       font-size: 20px;
-      white-space: pre-wrap;
-      text-align: left;
-      color: #333;
-      line-height: 1.5;
+      line-height: 1.6;
+      color: #f8d7ff;
+      text-shadow: 1px 1px 2px black;
     }
 
-    .cat {
-      display: none;
-      margin-top: 20px;
-      width: 90px;
-      height: 90px;
-      background: url('https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif') no-repeat center center / cover;
-      margin-left: auto;
-      margin-right: auto;
+    .skull {
+      width: 100px;
+      height: 100px;
+      margin: 20px auto;
+      background: url('https://i.gifer.com/7VE.gif') no-repeat center center;
+      background-size: contain;
     }
 
     .btn {
       margin-top: 20px;
-      background: pink;
-      border: none;
+      background: transparent;
+      border: 2px solid #8b0000;
       padding: 12px 25px;
       border-radius: 25px;
       font-size: 16px;
+      color: #f8d7ff;
       cursor: pointer;
-      color: #333;
       transition: all 0.3s ease;
     }
 
     .btn:hover {
-      background: hotpink;
+      background: #8b0000;
       color: white;
-      transform: scale(1.05);
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translate(-50%, -60%); }
       to { opacity: 1; transform: translate(-50%, -50%); }
     }
-
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 10px #ff69b4; }
-      50% { box-shadow: 0 0 25px #ff69b4; }
-    }
-
-    .confetti {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 999;
-    }
-
-    .confetti-piece {
-      width: 12px;
-      height: 12px;
-      position: absolute;
-      top: -10px;
-      animation: fall linear infinite;
-      opacity: 0.8;
-      border-radius: 50%;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(100vh) rotateZ(360deg);
-        opacity: 0;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .typed-text {
-        font-size: 18px;
-      }
-    }
   </style>
 </head>
 <body>
-  <div class="envelope" onclick="openMessage()"></div>
+
+  <div class="heart" onclick="openMessage()"></div>
 
   <div class="message-box" id="messageBox">
     <div class="typed-text" id="typedText"></div>
-    <div class="cat" id="cat"></div>
-    <button class="btn" onclick="alert('Beijinho enviado! 😽')">Mandar um beijinho de volta 💌</button>
+    <div class="skull"></div>
+    <button class="btn" onclick="showImmortalBox()">Clique aqui se está pronta para a imortalidade</button>
   </div>
 
-  <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_53f635bc30.mp3?filename=cute-children-110993.mp3"></audio>
+  <div class="immortal-box" id="immortalBox">
+    <div class="typed-text">
+      🌙🖤 Bem-vinda ao reino onde o tempo não ousa tocar.<br><br>
+      A partir de agora, tua alma vagueia pelas eras, teu sangue pulsa com ecos antigos, e teus olhos veem o que os mortais não podem suportar.<br><br>
+      Que tua sede jamais se sacie...<br><br>
+      <em>"Sou a minha última chance de salvação..."</em><br>– Ego Eris
+    </div>
+  </div>
 
-  <div class="confetti" id="confetti"></div>
+  <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/10/28/audio_5fc5e8e9cc.mp3?filename=horror-music-box-124008.mp3"></audio>
 
   <script>
-    const message = `Feliz aniversário, gatinha!!! 🎉🎂\n\nHoje é o seu dia e eu espero que ele seja tão doce quanto o seu sorriso e tão especial quanto você é para mim. Que cada instante seja cheio de carinho, paz, alegria e muito amor.\n\nCom amor, Helo. 💖`;
+    const message = `Feliz imortalidade, minha vampirona! 🦇🖤\n\nNesta noite sem fim, onde o tempo se curva diante de ti, eu celebro tua existência eterna.\nTeus passos ecoam em corredores de eras passadas, e tua presença é como névoa densa: bela, fria, inesquecível.\n\nHoje, não brindamos ao tempo que passa, mas ao tempo que se rende.`;
+
     let index = 0;
 
     function openMessage() {
       const box = document.getElementById("messageBox");
       const text = document.getElementById("typedText");
-      const cat = document.getElementById("cat");
       const music = document.getElementById("bgMusic");
 
       if (music.paused) music.play();
@@ -171,42 +148,18 @@
       text.innerHTML = "";
       index = 0;
       typeWriter();
-      launchConfetti();
 
       function typeWriter() {
         if (index < message.length) {
           text.innerHTML += message.charAt(index);
           index++;
           setTimeout(typeWriter, 40);
-        } else {
-          setTimeout(() => {
-            cat.style.display = "block";
-          }, 800);
         }
       }
     }
 
-    function launchConfetti() {
-      const confetti = document.getElementById("confetti");
-      for (let i = 0; i < 120; i++) {
-        const piece = document.createElement("div");
-        piece.classList.add("confetti-piece");
-
-        piece.style.left = Math.random() * 100 + "%";
-        const colors = ["#ff69b4", "#ffb6c1", "#ff1493", "#ffa07a", "#ffff99", "#fffacd"];
-        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-
-        const size = Math.random() * 8 + 4;
-        piece.style.width = size + "px";
-        piece.style.height = size + "px";
-
-        piece.style.animationDuration = (Math.random() * 2 + 3) + "s";
-        confetti.appendChild(piece);
-
-        setTimeout(() => {
-          piece.remove();
-        }, 6000);
-      }
+    function showImmortalBox() {
+      document.getElementById("immortalBox").style.display = "block";
     }
   </script>
 </body>
